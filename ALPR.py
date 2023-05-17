@@ -31,7 +31,6 @@ for contour in cnts:
 
 warped = four_point_transform(gray, location.reshape(4, 2))
 
-# com
 # get the bounding box of the contour and
 # extract the license plate from the image
 (x, y, w, h) = cv2.boundingRect(location)

@@ -40,7 +40,6 @@ def find_contours(edged, gray):
     return location, warped, detection
 
 def text_detection(location, warped):
-
     blur = cv2.GaussianBlur(warped, (3, 3), 0)
     ret, thresh = cv2.threshold(blur, 0, 255, cv2.THRESH_OTSU | cv2.THRESH_BINARY_INV)
 

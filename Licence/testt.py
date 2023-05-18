@@ -17,7 +17,6 @@ args = vars(ap.parse_args())
 
 image = cv2.imread(args["image"])
 
-
 image = imutils.resize(image, height=500)
 gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 bfilter = cv2.bilateralFilter(gray, 13, 17, 17)

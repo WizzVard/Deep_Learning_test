@@ -83,9 +83,6 @@ def text_detection(location, warped):
         # # perform bitwise not to flip image
         roi = cv2.bitwise_not(roi)
 
-
-        cv2.drawContours(image, [location], -1, (0, 255, 0), 3)
-
         text = pytesseract.image_to_string(roi, config='-c tessedit_char_whitelist=0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ --psm 8 --oem 3')
         clean_text = re.sub('[\W_]+', '', text)
         plate_num += clean_text
@@ -95,20 +92,21 @@ def text_detection(location, warped):
 def show_image(image):
     image = imutils.resize(image, height=500)
 
-    gray, edged = im_filter(image)
+    edged, gray = im_filter(image)
     location, warped, detection = find_contours(gray, edged)
-    plate_num = text_detection(location, warped)
-
 
     if len(detection) == 0:
         text = "Impossible to detect text"
         cv2.putText(image, text, (20, 40), cv2.FONT_HERSHEY_SIMPLEX, 0.75, (0, 0, 255), 3)
 
     else:
+        cv2.drawContours(image, [location], -1, (0, 255, 0), 3)
+        plate_num = text_detection(location, warped)
         font = cv2.FONT_HERSHEY_SIMPLEX
         cv2.putText(image, text=plate_num, org=(20, 40), fontFace=font, fontScale=1, color=(0, 255, 0), thickness=2, lineType=cv2.LINE_AA)
         print(plate_num)
 
+    cv2.imshow("Warped", warped)
     cv2.imshow("Image", image)
     cv2.waitKey(0)
 

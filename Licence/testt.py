@@ -80,8 +80,6 @@ else:
         if area < 100:
             continue
 
-        else:
-            print("roi is not found")
 
         cv2.rectangle(warped, (x, y), (x + w, y + h), (0, 255, 0), 2)
 
